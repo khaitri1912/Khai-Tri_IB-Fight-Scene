@@ -859,7 +859,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7421653487955196459, guid: 775cd3b427d63974d8703d8fc87cc3ce, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7421653487955196459, guid: 775cd3b427d63974d8703d8fc87cc3ce, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7905174323926392977, guid: 775cd3b427d63974d8703d8fc87cc3ce, type: 3}
       propertyPath: m_RootOrder
@@ -1444,7 +1448,7 @@ GameObject:
   - component: {fileID: 4674081638530836759}
   m_Layer: 0
   m_Name: CharMain_01
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2089,6 +2093,7 @@ MonoBehaviour:
   playerRigidbody: {fileID: 4674081638530836758}
   playerAnimator: {fileID: 4674081638530836756}
   joystick: {fileID: 2929252283563592193}
+  inputDirection: {x: 0, y: 0, z: 0}
   playerSpeed: 0
   playerRotationSpeed: 20
 --- !u!4 &4749768376571365309

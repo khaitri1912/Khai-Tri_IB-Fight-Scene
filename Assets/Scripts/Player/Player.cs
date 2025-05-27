@@ -9,18 +9,27 @@ public class Player : MonoBehaviour
 
     public CharSrciptableObject charsSO;
 
+
     public Rigidbody playerRigidbody;
     public Animator playerAnimator;
-    public FixedJoystick joystick;
 
+    public GameObject enemy;
+    public float distanceToEnemies = 1f;
+
+    [Header("Player Movement")]
+    public FixedJoystick joystick;
     public Vector3 inputDirection;
     public float playerSpeed;
     public float playerRotationSpeed = 20f;
 
+    [Header("Player States")]
     BaseStateMachine currentState;
     public PlayerIdleState playerIdleState = new PlayerIdleState();
     public PlayerWalkState playerWalkState = new PlayerWalkState();
     public PlayerAttackState playerAttackState = new PlayerAttackState();
+
+    [Header("PLayer Stats")]
+    public PlayerStats playerStats = new PlayerStats();
 
     private void Awake()
     {
@@ -32,6 +41,11 @@ public class Player : MonoBehaviour
 
         playerSpeed = charsSO.CharactersData.charactersBaseSpeed;
 
+
+
+        playerStats.health = charsSO.PlayerData.HP;
+        playerStats.damage = charsSO.PlayerData.PlayerDamage;
+
         SwitchState(playerIdleState);
     }
 
@@ -40,6 +54,12 @@ public class Player : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
+
+        /*playerHealth = charsSO.PlayerData.HP;
+        playerDamage = charsSO.PlayerData.PlayerDamage;*/
+
+        /*playerStats = GetComponent<PlayerStats>();*/
+        Debug.Log(playerStats.health);
     }
 
     // Update is called once per frame
@@ -47,6 +67,8 @@ public class Player : MonoBehaviour
     {
         PlayerRotation();
 
+        enemy = GameObject.FindGameObjectWithTag("Enemy");
+        
         currentState.UpdateState(this);
     }
 
@@ -60,14 +82,6 @@ public class Player : MonoBehaviour
     public void PlayerMovement()
     {
         playerRigidbody.velocity = new Vector3(joystick.Horizontal * playerSpeed, playerRigidbody.velocity.y, joystick.Vertical * playerSpeed);
-
-        /*if (joystick.Horizontal != 0 || joystick.Vertical != 0)
-        {
-            *//*transform.rotation = Quaternion.LookRotation(playerRigidbody.velocity);*//*
-            playerAnimator.SetBool("isWalking", true);
-        }
-        else
-            playerAnimator.SetBool("isWalking", false);*/  
     }
 
     public void PlayerRotation()
@@ -82,7 +96,7 @@ public class Player : MonoBehaviour
 
         if (inputDirection.magnitude > 0.1f)
         {
-            // Xoay theo hướng joystick
+            //  joystick
             Quaternion targetRotation = Quaternion.LookRotation(inputDirection);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, playerRotationSpeed * Time.deltaTime);
         }
@@ -94,4 +108,27 @@ public class Player : MonoBehaviour
         currentState = state;
         currentState.EnterState(this);
     }
+
+    public void PlayerTakeDamage(float damage)
+    {
+        if (playerStats.health <= 2)
+        {
+            playerAnimator.SetTrigger("defeat");
+            GetComponent<Collider>().enabled = false;
+        }
+        else
+        {
+            playerAnimator.SetTrigger("getDamage");
+        }
+        playerStats.TakeDamage(damage);
+    }
+
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Player da va cham voi Enemy!");
+            collision.gameObject.GetComponent<Enemy>().EnemyTakeDamage(2);
+        }
+    }*/
 }

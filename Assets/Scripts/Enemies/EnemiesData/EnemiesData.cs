@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class PLayerData 
+public class EnemiesData
 {
-    public float HP = 10;
-    public float PlayerDamage = 1.2f;
+    public float EnemyBaseHealth = 12f;
+    public float EnemyBaseDamage = 1.5f;
 }

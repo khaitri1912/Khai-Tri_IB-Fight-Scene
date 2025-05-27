@@ -7,4 +7,5 @@ public class CharSrciptableObject : ScriptableObject
 {
     [SerializeField] public CharactersData CharactersData;
     [SerializeField] public PLayerData PlayerData;
+    [SerializeField] public EnemiesData EnemiesData;
 }

@@ -7,5 +7,6 @@ public class PlayerStats : Stats
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
+        Debug.Log(health);
     }
 }

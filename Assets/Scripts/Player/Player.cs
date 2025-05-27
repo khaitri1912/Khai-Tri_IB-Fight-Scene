@@ -55,10 +55,6 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
 
-        /*playerHealth = charsSO.PlayerData.HP;
-        playerDamage = charsSO.PlayerData.PlayerDamage;*/
-
-        /*playerStats = GetComponent<PlayerStats>();*/
         Debug.Log(playerStats.health);
     }
 
@@ -114,7 +110,6 @@ public class Player : MonoBehaviour
         if (playerStats.health <= 2)
         {
             playerAnimator.SetTrigger("defeat");
-            GetComponent<Collider>().enabled = false;
         }
         else
         {
@@ -122,13 +117,4 @@ public class Player : MonoBehaviour
         }
         playerStats.TakeDamage(damage);
     }
-
-    /*private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Player da va cham voi Enemy!");
-            collision.gameObject.GetComponent<Enemy>().EnemyTakeDamage(2);
-        }
-    }*/
 }

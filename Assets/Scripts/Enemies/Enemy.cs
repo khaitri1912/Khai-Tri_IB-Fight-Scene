@@ -25,12 +25,6 @@ public class Enemy : MonoBehaviour
         Debug.Log(enemyStats.health);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void EnemyTakeDamage(float damage)
     {
         Debug.Log(damage);

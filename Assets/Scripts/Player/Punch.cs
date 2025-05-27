@@ -18,32 +18,16 @@ public class Punch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        enemy = GameObject.FindGameObjectWithTag("Enemy");
     }
-/*
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Player da va cham voi Enemy!");
-            collision.gameObject.GetComponent<Enemy>().EnemyTakeDamage(2);
-        }
-    }*/
 
     private void OnTriggerEnter(Collider other)
     {
         Destroy(transform.GetComponent<Rigidbody>());
-        /*if (other.gameObject.CompareTag("Enemy"))
-        {
-            Debug.Log("Player da va cham voi Enemy!");
-            transform.parent = other.transform;
-            other.gameObject.GetComponent<Enemy>().EnemyTakeDamage(2);
-        }*/
+        
         if (other.tag == "Enemy")
         {
             Debug.Log("Player da va cham voi Enemy!");
-            //transform.parent = other.transform;
-            other.gameObject.GetComponent<Enemy>().EnemyTakeDamage(2);
+            other.gameObject.GetComponent<Enemy>().EnemyTakeDamage(Player.PlayerInstance.playerStats.damage);
         }
     }
 }

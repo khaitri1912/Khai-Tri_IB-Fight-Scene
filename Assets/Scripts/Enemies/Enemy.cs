@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
     public void EnemyTakeDamage(float damage)
     {
         Debug.Log(damage);
-        if (enemyStats.health == 0)
+        if (enemyStats.health <= 2)
         {
             enemyAnimator.SetTrigger("defeat");
             GetComponent<Collider>().enabled = false;

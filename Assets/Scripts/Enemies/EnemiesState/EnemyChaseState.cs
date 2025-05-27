@@ -29,10 +29,24 @@ public class EnemyChaseState : StateMachineBehaviour
         {
             animator.SetBool("isChasing", false);
         }
+        else if (distance < _chaseRange)
+        {
+            if (Player.PlayerInstance.playerStats.health <= 0)
+            {
+                animator.SetBool("isChasing", false);
+            }
+        }
 
         if (distance < _attackRange)
         {
-            animator.SetBool("isAttacking", true);
+            if (Player.PlayerInstance.playerStats.health <= 0)
+            {
+                animator.SetBool("isAttacking", false);
+            }
+            else
+            {
+                animator.SetBool("isAttacking", true);
+            }
         }
     }
 
@@ -41,16 +55,4 @@ public class EnemyChaseState : StateMachineBehaviour
     {
         _agent.SetDestination(animator.transform.position);
     }
-
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
-
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
 }

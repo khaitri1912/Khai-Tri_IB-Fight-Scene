@@ -22,7 +22,7 @@ public class PlayerAttackState : BaseStateMachine
             {
                 ExitState(playerState, playerState.playerWalkState);
             }
-        } else if(Enemy.enemyInstance.enemyStats.health <= 0)
+        } else if(Enemy.enemyInstance.enemyStats.health <= 2)
         {
             ExitState(playerState, playerState.playerIdleState);
         }

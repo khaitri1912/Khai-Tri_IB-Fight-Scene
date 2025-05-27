@@ -2,34 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState : StateMachineBehaviour
+public class EnemyAttackState : StateMachineBehaviour
 {
-    private float _Timer;
-
     Transform _player;
-    float _chaseRange = 2f;
+
+    float _attackRange = 1.2f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _Timer = 0;
         _player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _Timer += Time.deltaTime;
-        if (_Timer > 2)
-        {
-            animator.SetBool("isPatrolling", true);
-        }
+        animator.transform.LookAt(_player);
 
-        float distanceToChase = Vector3.Distance(_player.position, animator.transform.position);
+        float distanceToStopAttack = Vector3.Distance(_player.position, animator.transform.position);
 
-        if (distanceToChase < _chaseRange)
+        if (distanceToStopAttack < _attackRange)
         {
-            animator.SetBool("isChasing", true);
+            animator.SetBool("isAttacking", false);
         }
     }
 

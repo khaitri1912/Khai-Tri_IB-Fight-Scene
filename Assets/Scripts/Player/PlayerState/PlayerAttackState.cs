@@ -11,8 +11,6 @@ public class PlayerAttackState : BaseStateMachine
 
     public override void UpdateState(Player playerState)
     {
-
-
         float distance = Vector3.Distance(playerState.transform.position, playerState.enemy.transform.position);
         if (distance > playerState.distanceToEnemies)
         {
@@ -24,6 +22,9 @@ public class PlayerAttackState : BaseStateMachine
             {
                 ExitState(playerState, playerState.playerWalkState);
             }
+        } else if(Enemy.enemyInstance.enemyStats.health == 0)
+        {
+            ExitState(playerState, playerState.playerIdleState);
         }
     }
 

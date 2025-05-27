@@ -29,8 +29,7 @@ public class Player : MonoBehaviour
     public PlayerAttackState playerAttackState = new PlayerAttackState();
 
     [Header("PLayer Stats")]
-    public float playerHealth;
-    public float playerDamage;
+    public PlayerStats playerStats = new PlayerStats();
 
     private void Awake()
     {
@@ -42,6 +41,11 @@ public class Player : MonoBehaviour
 
         playerSpeed = charsSO.CharactersData.charactersBaseSpeed;
 
+
+
+        playerStats.health = charsSO.PlayerData.HP;
+        playerStats.damage = charsSO.PlayerData.PlayerDamage;
+
         SwitchState(playerIdleState);
     }
 
@@ -51,9 +55,11 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         playerAnimator = GetComponent<Animator>();
 
-        playerHealth = charsSO.PlayerData.HP;
-        playerDamage = charsSO.PlayerData.PlayerDamage;
+        /*playerHealth = charsSO.PlayerData.HP;
+        playerDamage = charsSO.PlayerData.PlayerDamage;*/
 
+        /*playerStats = GetComponent<PlayerStats>();*/
+        Debug.Log(playerStats.health);
     }
 
     // Update is called once per frame
@@ -90,7 +96,7 @@ public class Player : MonoBehaviour
 
         if (inputDirection.magnitude > 0.1f)
         {
-            // Xoay theo hướng joystick
+            //  joystick
             Quaternion targetRotation = Quaternion.LookRotation(inputDirection);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, playerRotationSpeed * Time.deltaTime);
         }
@@ -102,4 +108,22 @@ public class Player : MonoBehaviour
         currentState = state;
         currentState.EnterState(this);
     }
+
+    public void PlayerTakeDamage(float damage)
+    {
+        playerStats.TakeDamage(damage);
+        if (playerStats.health <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    /*private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            Debug.Log("Player da va cham voi Enemy!");
+            collision.gameObject.GetComponent<Enemy>().EnemyTakeDamage(2);
+        }
+    }*/
 }

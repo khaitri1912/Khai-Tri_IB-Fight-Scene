@@ -7,6 +7,5 @@ using UnityEngine;
 public class PLayerData 
 {
     public float HP = 10;
-    public float Stamina = 15;
     public float PlayerDamage = 1.2f;
 }

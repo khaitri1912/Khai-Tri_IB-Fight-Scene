@@ -13,7 +13,14 @@ public class PlayerWalkState : BaseStateMachine
     {
         if (playerState.inputDirection.magnitude < 0.1f)
         {
-            ExitState(playerState, playerState.playerIdleState);
+            float distance = Vector3.Distance(playerState.transform.position, playerState.enemy.transform.position);
+
+            if (distance < playerState.distanceToEnemies)
+            {
+                Debug.Log("Da bat gap enemy");
+                ExitState(playerState, playerState.playerAttackState);
+            }else
+                ExitState(playerState, playerState.playerIdleState);
         }
     }
 

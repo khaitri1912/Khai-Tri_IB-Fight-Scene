@@ -111,11 +111,16 @@ public class Player : MonoBehaviour
 
     public void PlayerTakeDamage(float damage)
     {
-        playerStats.TakeDamage(damage);
-        if (playerStats.health <= 0)
+        if (playerStats.health <= 2)
         {
-            Destroy(gameObject);
+            playerAnimator.SetTrigger("defeat");
+            GetComponent<Collider>().enabled = false;
         }
+        else
+        {
+            playerAnimator.SetTrigger("getDamage");
+        }
+        playerStats.TakeDamage(damage);
     }
 
     /*private void OnCollisionEnter(Collision collision)

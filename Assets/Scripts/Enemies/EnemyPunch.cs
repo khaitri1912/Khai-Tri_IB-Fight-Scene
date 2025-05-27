@@ -13,12 +13,6 @@ public class EnemyPunch : MonoBehaviour
         enemyPunchRB.velocity = Vector3.zero;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         Destroy(transform.GetComponent<Rigidbody>());

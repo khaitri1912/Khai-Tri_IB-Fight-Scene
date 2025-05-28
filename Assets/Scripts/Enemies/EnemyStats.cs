@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyStats : Stats
 {
+    public bool enemyIsDefeat;
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);

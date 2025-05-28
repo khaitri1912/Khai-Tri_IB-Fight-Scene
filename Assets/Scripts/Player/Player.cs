@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     public PlayerIdleState playerIdleState = new PlayerIdleState();
     public PlayerWalkState playerWalkState = new PlayerWalkState();
     public PlayerAttackState playerAttackState = new PlayerAttackState();
+    public PlayerVictoryState playerVictoryState = new PlayerVictoryState();
 
     [Header("PLayer Stats")]
     public PlayerStats playerStats = new PlayerStats();
@@ -69,6 +70,7 @@ public class Player : MonoBehaviour
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         
         currentState.UpdateState(this);
+        Debug.Log(currentState.ToString());
 
         playerHealth_Bar.value = playerStats.health;
     }

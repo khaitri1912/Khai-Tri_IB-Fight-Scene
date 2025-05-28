@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class Player : MonoBehaviour
 
     [Header("PLayer Stats")]
     public PlayerStats playerStats = new PlayerStats();
+    public Slider playerHealth_Bar;
 
     private void Awake()
     {
@@ -56,6 +58,7 @@ public class Player : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
 
         Debug.Log(playerStats.health);
+        playerHealth_Bar.maxValue = charsSO.PlayerData.HP;
     }
 
     // Update is called once per frame
@@ -66,6 +69,8 @@ public class Player : MonoBehaviour
         enemy = GameObject.FindGameObjectWithTag("Enemy");
         
         currentState.UpdateState(this);
+
+        playerHealth_Bar.value = playerStats.health;
     }
 
     private void FixedUpdate()

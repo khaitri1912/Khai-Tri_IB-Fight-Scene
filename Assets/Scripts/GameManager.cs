@@ -1,18 +1,85 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager GMInstance;
+
+    public int numberOfEnemies;
+
+    [Header("Enemy")]
+    public GameObject[] enemies;
+    public bool enemyIsAllDead;
+
+    [Header("UI Panel")]
+    public GameObject victoryPanel;
+
+    private void Awake()
     {
-        
+        if (GMInstance == null)
+        {
+            GMInstance = this;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        enemyIsAllDead = false;
+        victoryPanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        CheckEnemyLife();
+    }
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void SetEnemyAlive()
+    {
+        enemyIsAllDead = false;
+    }
+
+    public void CheckEnemyLife()
+    {
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        if (Player.PlayerInstance == null)
+        {
+            victoryPanel.SetActive(false);
+            return;
+        }
+        else if (enemies.Length == 0)
+        {
+            Debug.Log("Khong con enemy nao.");
+            enemyIsAllDead = true;
+            victoryPanel.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Con " + enemies.Length + " enemy");
+        }
+
+    }
+
+    public IEnumerator WaitToSpawnPanel()
+    {
+        yield return new WaitForSeconds(5);
+    }
+
+    public void SelectMode(int countEnemy)
+    {
+        PlayerPrefs.SetInt("AmountOfEnemies", countEnemy);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(1);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

@@ -2,46 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Playables;
 
-public class EnemyAttackState : StateMachineBehaviour
+public class AllyAttackState : StateMachineBehaviour
 {
-    Transform _player;
-    //Transform _ally;
 
-    float _attackRange = 1.2f;
+    Transform _enemy;
+
+    float _attackRange = 1f;
 
     NavMeshAgent _agent;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _player = GameObject.FindGameObjectWithTag("Player").transform;
-        //_ally = GameObject.FindGameObjectWithTag("Ally").transform;
+        _enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
         _agent = animator.GetComponent<NavMeshAgent>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.transform.LookAt(_player);
+        animator.transform.LookAt(_enemy);
 
+        float distanceToStopAttack = Vector3.Distance(_enemy.position, animator.transform.position);
 
-        float distanceToStopAttackPlayer = Vector3.Distance(_player.position, animator.transform.position);
-        //float distanceToStopAttackAlly = Vector3.Distance(_ally.position, animator.transform.position);
-
-        if (distanceToStopAttackPlayer < _attackRange)
+        if (distanceToStopAttack < _attackRange)
         {
-            animator.SetBool("isAttacking", false);
+            animator.SetBool("isAllyAttacking", false);
         }
-
-        /*if (distanceToStopAttackAlly < _attackRange)
-        {
-            animator.SetBool("isAttacking", false);
-        }*//*else
-        {
-            animator.transform.LookAt(_ally);
-        }*/
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

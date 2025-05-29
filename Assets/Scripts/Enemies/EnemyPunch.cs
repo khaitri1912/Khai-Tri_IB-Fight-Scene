@@ -21,6 +21,10 @@ public class EnemyPunch : MonoBehaviour
         {
             Debug.Log("Enemy da va cham voi Player!");
             other.gameObject.GetComponent<Player>().PlayerTakeDamage(Enemy.enemyInstance.enemyStats.damage);
+        }else if (other.tag == "Ally")
+        {
+            Debug.Log("Enemy da va cham voi Ally!");
+            other.gameObject.GetComponent<Ally>().AllyTakeDamge(Enemy.enemyInstance.enemyStats.damage);
         }
     }
 }

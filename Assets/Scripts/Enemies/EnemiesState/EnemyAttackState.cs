@@ -7,6 +7,7 @@ using UnityEngine.Playables;
 public class EnemyAttackState : StateMachineBehaviour
 {
     Transform _player;
+    //Transform _ally;
 
     float _attackRange = 1.2f;
 
@@ -16,6 +17,7 @@ public class EnemyAttackState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
+        //_ally = GameObject.FindGameObjectWithTag("Ally").transform;
         _agent = animator.GetComponent<NavMeshAgent>();
     }
 
@@ -24,12 +26,22 @@ public class EnemyAttackState : StateMachineBehaviour
     {
         animator.transform.LookAt(_player);
 
-        float distanceToStopAttack = Vector3.Distance(_player.position, animator.transform.position);
 
-        if (distanceToStopAttack < _attackRange)
+        float distanceToStopAttackPlayer = Vector3.Distance(_player.position, animator.transform.position);
+        //float distanceToStopAttackAlly = Vector3.Distance(_ally.position, animator.transform.position);
+
+        if (distanceToStopAttackPlayer < _attackRange)
         {
             animator.SetBool("isAttacking", false);
         }
+
+        /*if (distanceToStopAttackAlly < _attackRange)
+        {
+            animator.SetBool("isAttacking", false);
+        }*//*else
+        {
+            animator.transform.LookAt(_ally);
+        }*/
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyChaseState : StateMachineBehaviour
 {
     Transform _player;
+    Transform _ally;
     NavMeshAgent _agent;
     float _chaseRange = 2f;
     float _attackRange = 1.2f;
@@ -14,6 +15,7 @@ public class EnemyChaseState : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
+        //_ally = GameObject.FindGameObjectWithTag("Ally").transform;
         _agent = animator.GetComponent<NavMeshAgent>();
         _agent.speed = 1.5f;
     }
@@ -22,14 +24,16 @@ public class EnemyChaseState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _agent.SetDestination(_player.position);
+        //_agent.SetDestination(_ally.position);
 
-        float distance = Vector3.Distance(_player.position, animator.transform.position);
+        float distancePlayer = Vector3.Distance(_player.position, animator.transform.position);
+        //float distanceAlly = Vector3.Distance(_ally.position, animator.transform.position);
 
-        if (distance > _chaseRange)
+        if (distancePlayer > _chaseRange)
         {
             animator.SetBool("isChasing", false);
         }
-        else if (distance < _chaseRange)
+        else if (distancePlayer < _chaseRange)
         {
             if (Player.PlayerInstance.playerStats.health <= 0)
             {
@@ -37,7 +41,7 @@ public class EnemyChaseState : StateMachineBehaviour
             }
         }
 
-        if (distance < _attackRange)
+        if (distancePlayer < _attackRange)
         {
             if (Player.PlayerInstance.playerStats.health <= 0)
             {
@@ -48,6 +52,30 @@ public class EnemyChaseState : StateMachineBehaviour
                 animator.SetBool("isAttacking", true);
             }
         }
+
+        /*if (distanceAlly > _chaseRange)
+        {
+            animator.SetBool("isChasing", false);
+        }
+        else if (distanceAlly < _chaseRange)
+        {
+            if (Ally.allyInstance.allyStats.health <= 0)
+            {
+                animator.SetBool("isChasing", false);
+            }
+        }
+
+        if (distanceAlly < _attackRange)
+        {
+            if (Ally.allyInstance.allyStats.health <= 0)
+            {
+                animator.SetBool("isAttacking", false);
+            }
+            else
+            {
+                animator.SetBool("isAttacking", true);
+            }
+        }*/
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

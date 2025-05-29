@@ -7,6 +7,7 @@ public class EnemyIdleState : StateMachineBehaviour
     private float _Timer;
 
     Transform _player;
+    //Transform _ally;
     float _chaseRange = 2f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -14,6 +15,7 @@ public class EnemyIdleState : StateMachineBehaviour
     {
         _Timer = 0;
         _player = GameObject.FindGameObjectWithTag("Player").transform;
+        //_ally = GameObject.FindGameObjectWithTag("Ally").transform;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -25,9 +27,10 @@ public class EnemyIdleState : StateMachineBehaviour
             animator.SetBool("isPatrolling", true);
         }
 
-        float distanceToChase = Vector3.Distance(_player.position, animator.transform.position);
+        float distanceToChasePlayer = Vector3.Distance(_player.position, animator.transform.position);
+        //float distanceToChaseAlly = Vector3.Distance(_ally.position, animator.transform.position);
 
-        if (distanceToChase < _chaseRange)
+        if (distanceToChasePlayer < _chaseRange)
         {
             if (Player.PlayerInstance.playerStats.health <= 0)
             {
@@ -37,6 +40,18 @@ public class EnemyIdleState : StateMachineBehaviour
                 animator.SetBool("isChasing", true);
             }
         }
+
+        /*if (distanceToChaseAlly < _chaseRange)
+        {
+            if (Ally.allyInstance.allyStats.health <= 0)
+            {
+                animator.SetBool("isChasing", false);
+            }
+            else
+            {
+                animator.SetBool("isChasing", true);
+            }
+        }*/
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

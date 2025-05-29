@@ -11,6 +11,7 @@ public class PatrolState : StateMachineBehaviour
     private float _Timer;
 
     Transform _player;
+    //Transform _ally;
     float _chaseRange = 2f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -19,6 +20,7 @@ public class PatrolState : StateMachineBehaviour
         _Timer = 0;
 
         _player = GameObject.FindGameObjectWithTag("Player").transform;
+        //_ally = GameObject.FindGameObjectWithTag("Ally").transform;
 
         _agent = animator.GetComponent<NavMeshAgent>();
         _agent.speed = 0.5f;
@@ -47,9 +49,10 @@ public class PatrolState : StateMachineBehaviour
             _agent.SetDestination(enemyPoints[Random.RandomRange(0, enemyPoints.Count)].position);
         }
 
-        float distanceToChase = Vector3.Distance(_player.position, animator.transform.position);
+        float distanceToChasePlayer = Vector3.Distance(_player.position, animator.transform.position);
+        //float distanceToChaseAlly = Vector3.Distance(_ally.position, animator.transform.position);
 
-        if (distanceToChase < _chaseRange)
+        if (distanceToChasePlayer < _chaseRange)
         {
             if (Player.PlayerInstance.playerStats.health <= 0)
             {
@@ -60,6 +63,18 @@ public class PatrolState : StateMachineBehaviour
                 animator.SetBool("isChasing", true);
             }
         }
+
+        /*if (distanceToChaseAlly < _chaseRange)
+        {
+            if (Ally.allyInstance.allyStats.health <= 0)
+            {
+                animator.SetBool("isChasing", false);
+            }
+            else
+            {
+                animator.SetBool("isChasing", true);
+            }
+        }*/
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

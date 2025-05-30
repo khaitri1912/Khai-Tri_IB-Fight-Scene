@@ -63,8 +63,6 @@ public class Player : MonoBehaviour
 
         enemyListTag = GameObject.FindGameObjectsWithTag("Enemy");
 
-        Debug.Log("So luong enemy trong CheckClosestEnemy: " + enemyListTag.Length);
-
         for (int i = 0; i < enemyListTag.Length; i++)
         {
             enemyList.Add(enemyListTag[i]);
@@ -75,8 +73,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //PlayerRotation();
-
         currentState.UpdateState(this);
         Debug.Log(currentState.ToString());
 
@@ -109,16 +105,10 @@ public class Player : MonoBehaviour
     public void PlayerRotation()
     {
         inputDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
-        float magnitude = inputDirection.magnitude;
-        magnitude = Mathf.Clamp01(magnitude);
         inputDirection.Normalize();
-
-
-        //transform.Translate(inputDirection * magnitude * playerSpeed * Time.deltaTime, Space.World);
 
         if (inputDirection.magnitude > 0.1f)
         {
-            //  joystick
             Quaternion targetRotation = Quaternion.LookRotation(inputDirection);
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, playerRotationSpeed * Time.deltaTime);
         }

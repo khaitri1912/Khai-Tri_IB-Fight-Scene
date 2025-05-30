@@ -32,7 +32,6 @@ public class PatrolState : StateMachineBehaviour
         {
             _ally = null;
             _allyHealth = -10;
-            Debug.Log("enemy patrol : Can't find ally");
         }
         _agent = animator.GetComponent<NavMeshAgent>();
         _agent.speed = 0.5f;

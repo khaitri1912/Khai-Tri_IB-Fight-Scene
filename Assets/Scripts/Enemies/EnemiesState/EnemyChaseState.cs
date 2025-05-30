@@ -28,7 +28,6 @@ public class EnemyChaseState : StateMachineBehaviour
         {
             _ally = null;
             _allyHealth = -10;
-            Debug.Log("enemy chase : Can't find ally");
         }
 
         _agent = animator.GetComponent<NavMeshAgent>();
@@ -44,8 +43,6 @@ public class EnemyChaseState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Transform _closestTarget = GetClosestTarget(_player, _ally, animator.transform);
-
-        Debug.Log("Enemy Chase: "+_closestTarget.name);
 
         _agent.SetDestination(_closestTarget.position);
 

@@ -13,11 +13,6 @@ public class EnemyPunch : MonoBehaviour
         enemyPunchRB.velocity = Vector3.zero;
     }
 
-    /*private void OnBecameVisible()
-    {
-        
-    }*/
-
     private void OnTriggerEnter(Collider other)
     {
         Destroy(transform.GetComponent<Rigidbody>());

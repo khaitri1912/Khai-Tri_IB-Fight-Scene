@@ -91,13 +91,12 @@ public class GameManager : MonoBehaviour
         }
         else if (enemies.Length == 0)
         {
-            Debug.Log("Khong con enemy nao.");
             enemyIsAllDead = true;
             victoryPanel.SetActive(true);
         }
         else
         {
-            Debug.Log("Con " + enemies.Length + " enemy");
+            Debug.Log("The amount of enemy: " + enemies.Length);
         }
 
     }

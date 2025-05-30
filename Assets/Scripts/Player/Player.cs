@@ -14,8 +14,11 @@ public class Player : MonoBehaviour
     public Rigidbody playerRigidbody;
     public Animator playerAnimator;
 
+    [Header("Enemy")]
     public GameObject enemy;
-    public float distanceToEnemies = 1f;
+    public List<GameObject> enemyList = new List<GameObject>();
+    public GameObject[] enemyListTag;
+    public float distanceToEnemies = 1.5f;
 
     [Header("Player Movement")]
     public FixedJoystick joystick;
@@ -41,10 +44,7 @@ public class Player : MonoBehaviour
             PlayerInstance = this;
         }
 
-
         playerSpeed = charsSO.CharactersData.charactersBaseSpeed;
-
-
 
         playerStats.health = charsSO.PlayerData.HP;
         playerStats.damage = charsSO.PlayerData.PlayerDamage;
@@ -60,24 +60,43 @@ public class Player : MonoBehaviour
 
         Debug.Log(playerStats.health);
         playerHealth_Bar.maxValue = charsSO.PlayerData.HP;
+
+        enemyListTag = GameObject.FindGameObjectsWithTag("Enemy");
+
+        Debug.Log("So luong enemy trong CheckClosestEnemy: " + enemyListTag.Length);
+
+        for (int i = 0; i < enemyListTag.Length; i++)
+        {
+            enemyList.Add(enemyListTag[i]);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerRotation();
+        //PlayerRotation();
 
-        enemy = GameObject.FindGameObjectWithTag("Enemy");
-        
         currentState.UpdateState(this);
         Debug.Log(currentState.ToString());
 
         playerHealth_Bar.value = playerStats.health;
+
+        enemy = CheckClosestEnemy();
+
+        foreach (GameObject e in enemyList)
+        {
+            if (e == null)
+            {
+                enemyList.Remove(e);
+            }
+        }
     }
 
     private void FixedUpdate()
     {
         PlayerMovement();
+        PlayerRotation();
     }
 
 
@@ -95,7 +114,7 @@ public class Player : MonoBehaviour
         inputDirection.Normalize();
 
 
-        transform.Translate(inputDirection * magnitude * playerSpeed * Time.deltaTime, Space.World);
+        //transform.Translate(inputDirection * magnitude * playerSpeed * Time.deltaTime, Space.World);
 
         if (inputDirection.magnitude > 0.1f)
         {
@@ -123,5 +142,29 @@ public class Player : MonoBehaviour
             playerAnimator.SetTrigger("getDamage");
         }
         playerStats.TakeDamage(damage);
+    }
+
+    public GameObject CheckClosestEnemy()
+    {
+        if (enemyList.Count == 0 || enemyList == null)
+        {
+            return null;
+        }
+
+        GameObject closestEnemy = null;
+        float shortestDistance = Mathf.Infinity;
+
+        foreach (GameObject e in enemyList)
+        {
+            if (e == null) continue;
+
+            float distance = Vector3.Distance(e.transform.position, playerAnimator.transform.position);
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                closestEnemy = e;
+            }
+        }
+        return closestEnemy;
     }
 }

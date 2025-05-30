@@ -7,6 +7,7 @@ public class Ally : MonoBehaviour
 {
     public static Ally allyInstance;
     public Animator allyAnimator;
+    public Rigidbody allyRB;
 
     public CharSrciptableObject charSO;
 
@@ -34,6 +35,7 @@ public class Ally : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        allyRB.velocity = Vector3.zero;
         allyHealth_Bar.value = allyStats.health;
     }
 
@@ -43,7 +45,6 @@ public class Ally : MonoBehaviour
         {
             allyAnimator.SetTrigger("defeat");
             GetComponent<Collider>().enabled = false;
-            Destroy(gameObject);
         }
         else
         {

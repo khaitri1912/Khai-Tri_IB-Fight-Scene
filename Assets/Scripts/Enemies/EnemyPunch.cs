@@ -13,17 +13,21 @@ public class EnemyPunch : MonoBehaviour
         enemyPunchRB.velocity = Vector3.zero;
     }
 
+    /*private void OnBecameVisible()
+    {
+        
+    }*/
+
     private void OnTriggerEnter(Collider other)
     {
         Destroy(transform.GetComponent<Rigidbody>());
+        Debug.Log(other.tag);
 
         if (other.tag == "Player")
         {
-            Debug.Log("Enemy da va cham voi Player!");
             other.gameObject.GetComponent<Player>().PlayerTakeDamage(Enemy.enemyInstance.enemyStats.damage);
         }else if (other.tag == "Ally")
         {
-            Debug.Log("Enemy da va cham voi Ally!");
             other.gameObject.GetComponent<Ally>().AllyTakeDamge(Enemy.enemyInstance.enemyStats.damage);
         }
     }

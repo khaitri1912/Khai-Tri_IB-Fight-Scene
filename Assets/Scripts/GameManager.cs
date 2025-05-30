@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        currentLevel = PlayerPrefs.GetInt("Level");
         CheckEnemyLife();
         CheckAlliesAndPlayerIsAlive();
         CheckLost();
@@ -50,12 +51,19 @@ public class GameManager : MonoBehaviour
     public void BackToMainMenu()
     {
         isLost = false;
+        lostPanel.SetActive(false);
         SceneManager.LoadScene(0);
     }
 
     public void CheckAlliesAndPlayerIsAlive()
     {
         allies = GameObject.FindGameObjectsWithTag("Ally");
+
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            return;
+        }
+
         if (allies.Length == 0)
         {
             if (Player.PlayerInstance.playerStats.health <= 0)
@@ -123,6 +131,10 @@ public class GameManager : MonoBehaviour
         {
             lostPanel.SetActive(true);
         }
+        else
+        {
+            lostPanel.SetActive(false);
+        }
     }
 
     public void RestartGame()
@@ -136,7 +148,14 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("Level", level);
         PlayerPrefs.Save();
-        currentLevel = level;
+    }
+
+    public void NextLevel()
+    {
+        currentLevel += 1;
+        PlayerPrefs.SetInt("Level", currentLevel);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(1);
     }
 
     public void PauseGame()

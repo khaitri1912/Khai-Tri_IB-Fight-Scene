@@ -29,7 +29,6 @@ public class Punch : MonoBehaviour
         
         if (other.tag == "Enemy")
         {
-            Debug.Log("Player da va cham voi Enemy!");
             other.gameObject.GetComponent<Enemy>().EnemyTakeDamage(Player.PlayerInstance.playerStats.damage);
         }
     }

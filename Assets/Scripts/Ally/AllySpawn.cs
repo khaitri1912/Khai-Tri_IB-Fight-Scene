@@ -54,7 +54,6 @@ public class AllySpawn : MonoBehaviour
                 allyAlive = true;
             }
         }
-        Debug.Log(allyAlive);
         return allyAlive;
     }
 }

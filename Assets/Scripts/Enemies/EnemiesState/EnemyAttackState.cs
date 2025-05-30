@@ -43,8 +43,6 @@ public class EnemyAttackState : StateMachineBehaviour
         
         animator.transform.LookAt(_closestTarget);
 
-        Debug.Log("Attacking: "+_closestTarget.name);
-
         float distanceToStopAttackTarget = Vector3.Distance(_closestTarget.position, animator.transform.position);
         
         if (distanceToStopAttackTarget < _attackRange)

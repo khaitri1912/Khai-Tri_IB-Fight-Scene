@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySpawn : MonoBehaviour
 {
     public GameObject prefabEnemy;
-    public List<GameObject> enemies;
+    public List<GameObject> enemyList;
     public List<Transform> enemyPoints = new List<Transform>();
 
     // Start is called before the first frame update
@@ -29,14 +29,15 @@ public class EnemySpawn : MonoBehaviour
 
     public void SpawnEnemies()
     {
-        int amountOfEnemies = PlayerPrefs.GetInt("AmountOfEnemies", 2);
+        int amountOfEnemies = PlayerPrefs.GetInt("AmountOfEnemies");
         int randomPlace = Random.Range(0, enemyPoints.Count);
 
         for (int i = 0; i < amountOfEnemies; i++)
         {
+            Debug.Log("SpawnEnemies: "+i);
             Transform randomPoint = enemyPoints[randomPlace];
             GameObject enemy = Instantiate(prefabEnemy, randomPoint.position, Quaternion.identity);
-            enemies.Add(enemy);
+            enemyList.Add(enemy);
         }
     }
 }

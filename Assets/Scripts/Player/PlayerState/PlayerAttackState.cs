@@ -32,25 +32,10 @@ public class PlayerAttackState : BaseStateMachine
             }
         }
 
-        if (playerState.enemy == null)
+        if (playerState.enemy == null && playerState.enemyList.Count <= 0)
         {
             ExitState(playerState, playerState.playerVictoryState);
         }
-        
-        /*if (distance > playerState.distanceToEnemies)
-        {
-            if (playerState.inputDirection.magnitude < 0.1f)
-            {
-                ExitState(playerState, playerState.playerIdleState);
-            }
-            else
-            {
-                ExitState(playerState, playerState.playerWalkState);
-            }
-        } else if(Enemy.enemyInstance.enemyStats.health <= 1)
-        {
-            ExitState(playerState, playerState.playerVictoryState);
-        }*/
     }
 
     public void ExitState(Player playerState, BaseStateMachine state)

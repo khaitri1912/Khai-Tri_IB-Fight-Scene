@@ -71,10 +71,20 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(5);
     }
 
-    public void SelectMode(int countEnemy)
+    public void SelectAmountOfEnemies(int countEnemy)
     {
         PlayerPrefs.SetInt("AmountOfEnemies", countEnemy);
         PlayerPrefs.Save();
+    }
+
+    public void SelectAmountOfAllies(int countAlly)
+    {
+        PlayerPrefs.SetInt("AmountOfAllies", countAlly);
+        PlayerPrefs.Save();
+    }
+
+    public void StartGame()
+    {
         SceneManager.LoadScene(1);
     }
 

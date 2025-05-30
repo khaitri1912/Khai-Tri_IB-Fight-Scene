@@ -7,7 +7,9 @@ public class EnemyIdleState : StateMachineBehaviour
     private float _Timer;
 
     Transform _player;
-    //Transform _ally;
+    
+    Transform _ally;
+    float _allyHealth;
     float _chaseRange = 2f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -15,7 +17,19 @@ public class EnemyIdleState : StateMachineBehaviour
     {
         _Timer = 0;
         _player = GameObject.FindGameObjectWithTag("Player").transform;
-        //_ally = GameObject.FindGameObjectWithTag("Ally").transform;
+
+        GameObject allyObject = GameObject.FindGameObjectWithTag("Ally");
+
+        if (allyObject != null)
+        {
+            _ally = allyObject.transform;
+            _allyHealth = Ally.allyInstance.allyStats.health;
+        }
+        else
+        {
+            _ally = null;
+            _allyHealth = -10;
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -27,36 +41,61 @@ public class EnemyIdleState : StateMachineBehaviour
             animator.SetBool("isPatrolling", true);
         }
 
-        float distanceToChasePlayer = Vector3.Distance(_player.position, animator.transform.position);
-        //float distanceToChaseAlly = Vector3.Distance(_ally.position, animator.transform.position);
-
-        if (distanceToChasePlayer < _chaseRange)
+        Transform _closestTarget = GetClosestTarget(_player, _ally, animator.transform);
+        
+        float distanceToChaseTarget = Vector3.Distance(_closestTarget.position, animator.transform.position);
+        
+        if (distanceToChaseTarget < _chaseRange)
         {
-            if (Player.PlayerInstance.playerStats.health <= 0)
+            if (_allyHealth != -10)
             {
-                animator.SetBool("isChasing", false);
-            }else
-            {
-                animator.SetBool("isChasing", true);
-            }
-        }
-
-        /*if (distanceToChaseAlly < _chaseRange)
-        {
-            if (Ally.allyInstance.allyStats.health <= 0)
-            {
-                animator.SetBool("isChasing", false);
+                if (Player.PlayerInstance.playerStats.health <= 0
+                || Ally.allyInstance.allyStats.health <= 0)
+                {
+                    animator.SetBool("isChasing", false);
+                }
+                else
+                {
+                    animator.SetBool("isChasing", true);
+                }
             }
             else
             {
-                animator.SetBool("isChasing", true);
+                if (Player.PlayerInstance.playerStats.health <= 0)
+                {
+                    animator.SetBool("isChasing", false);
+                }
+                else
+                {
+                    animator.SetBool("isChasing", true);
+                }
             }
-        }*/
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         
+    }
+
+    Transform GetClosestTarget(Transform _player, Transform _ally, Transform animatorTransform)
+    {
+        if (_ally == null)
+        {
+            return _player;
+        }
+
+        float distanceToPlayer = Vector3.Distance(_player.position, animatorTransform.position);
+        float distanceToAlly = Vector3.Distance(_ally.position, animatorTransform.position);
+
+        if (distanceToPlayer < distanceToAlly)
+        {
+            return _player;
+        }
+        else
+        {
+            return _ally;
+        }
     }
 }

@@ -7,6 +7,5 @@ public class AllyStats : Stats
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        Debug.Log("Mau cua Ally: " + health);
     }
 }

@@ -11,14 +11,19 @@ public class GameManager : MonoBehaviour
     public int numberOfEnemies;
     public int currentLevel;
 
+    [Header("Ally")]
+    public GameObject[] allies;
+
 
     [Header("Enemy")]
     public GameObject[] enemies;
     public bool enemyIsAllDead;
 
     [Header("UI Panel")]
+    public bool isLost;
     public GameObject victoryPanel;
     public GameObject pausePanel;
+    public GameObject lostPanel;
 
     private void Awake()
     {
@@ -31,6 +36,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         enemyIsAllDead = false;
+        isLost = false;
         victoryPanel.SetActive(false);
         pausePanel.SetActive(false);
     }
@@ -38,15 +44,33 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         CheckEnemyLife();
+        CheckAlliesAndPlayerIsAlive();
+        CheckLost();
     }
     public void BackToMainMenu()
     {
+        isLost = false;
         SceneManager.LoadScene(0);
     }
 
-    public void SetEnemyAlive()
+    public void CheckAlliesAndPlayerIsAlive()
     {
-        enemyIsAllDead = false;
+        allies = GameObject.FindGameObjectsWithTag("Ally");
+        if (allies.Length == 0)
+        {
+            if (Player.PlayerInstance.playerStats.health <= 0)
+            {
+                isLost = true;
+            }
+        }
+        else
+        {
+            if (Player.PlayerInstance.playerStats.health <= 0
+                && Ally.allyInstance.allyStats.health <= 0)
+            {
+                isLost = true;
+            }
+        }
     }
 
     public void CheckEnemyLife()
@@ -90,6 +114,21 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Time.timeScale = 1f;
+        SceneManager.LoadScene(1);
+    }
+
+    public void CheckLost()
+    {
+        if (isLost)
+        {
+            lostPanel.SetActive(true);
+        }
+    }
+
+    public void RestartGame()
+    {
+        lostPanel.SetActive(false);
+        Time.timeScale = 1;
         SceneManager.LoadScene(1);
     }
 

@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public static GameManager GMInstance;
 
     public int numberOfEnemies;
+    public int currentLevel;
+
 
     [Header("Enemy")]
     public GameObject[] enemies;
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI Panel")]
     public GameObject victoryPanel;
+    public GameObject pausePanel;
 
     private void Awake()
     {
@@ -29,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         enemyIsAllDead = false;
         victoryPanel.SetActive(false);
+        pausePanel.SetActive(false);
     }
 
     private void Update()
@@ -86,6 +90,25 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void SetLevel(int level)
+    {
+        PlayerPrefs.SetInt("Level", level);
+        PlayerPrefs.Save();
+        currentLevel = level;
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        pausePanel.SetActive(true);
+    }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1f;
+        pausePanel.SetActive(false);
     }
 
     public void QuitGame()

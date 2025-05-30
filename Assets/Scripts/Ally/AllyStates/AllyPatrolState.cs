@@ -11,7 +11,7 @@ public class AllyPatrolState : StateMachineBehaviour
     private float _timer;
 
     Transform _enemy;
-    float _chaseRange = 2f;
+    float _chaseRange = 2.5f;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

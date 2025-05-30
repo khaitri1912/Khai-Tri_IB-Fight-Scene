@@ -40,7 +40,6 @@ public class Enemy : MonoBehaviour
         Debug.Log(damage);
         if (enemyStats.health <= 2)
         {
-            Debug.Log("Enemy da chet");
             enemyAnimator.SetTrigger("defeat");
             enemyStats.enemyIsDefeat = true;
             GetComponent<Collider>().enabled = false;
@@ -56,6 +55,6 @@ public class Enemy : MonoBehaviour
 
     public IEnumerator EnemyDead()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(500);
     }
 }

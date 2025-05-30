@@ -27,9 +27,11 @@ public class Enemy : MonoBehaviour
 
         enemyHealth_bar.maxValue = charSO.EnemiesData.EnemyBaseHealth;
 
-        if (GameManager.GMInstance.currentLevel != 1)
+        if (PlayerPrefs.GetInt("Level") != 1)
         {
-            enemyStats.health += GameManager.GMInstance.currentLevel * 2;
+            Debug.Log("currentlv: "+ PlayerPrefs.GetInt("Level"));
+            enemyStats.health += PlayerPrefs.GetInt("Level") * 2;
+            Debug.Log("Current health: "+enemyStats.health);
             enemyHealth_bar.maxValue = enemyStats.health;
         }
 

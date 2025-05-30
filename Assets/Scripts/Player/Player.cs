@@ -75,7 +75,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerRotation();
+        //PlayerRotation();
 
         currentState.UpdateState(this);
         Debug.Log(currentState.ToString());
@@ -91,12 +91,12 @@ public class Player : MonoBehaviour
                 enemyList.Remove(e);
             }
         }
-
     }
 
     private void FixedUpdate()
     {
         PlayerMovement();
+        PlayerRotation();
     }
 
 
@@ -114,7 +114,7 @@ public class Player : MonoBehaviour
         inputDirection.Normalize();
 
 
-        transform.Translate(inputDirection * magnitude * playerSpeed * Time.deltaTime, Space.World);
+        //transform.Translate(inputDirection * magnitude * playerSpeed * Time.deltaTime, Space.World);
 
         if (inputDirection.magnitude > 0.1f)
         {

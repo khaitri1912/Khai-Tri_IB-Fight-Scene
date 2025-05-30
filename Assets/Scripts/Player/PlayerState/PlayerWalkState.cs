@@ -17,7 +17,6 @@ public class PlayerWalkState : BaseStateMachine
 
             if (distance < playerState.distanceToEnemies)
             {
-                Debug.Log("Da bat gap enemy");
                 ExitState(playerState, playerState.playerAttackState);
             }else
                 ExitState(playerState, playerState.playerIdleState);

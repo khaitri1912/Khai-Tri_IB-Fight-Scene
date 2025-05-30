@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
 
     public void PlayerTakeDamage(float damage)
     {
-        if (playerStats.health <= 2)
+        if (playerStats.health < 2)
         {
             playerAnimator.SetTrigger("defeat");
         }

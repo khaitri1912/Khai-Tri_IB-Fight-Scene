@@ -30,7 +30,8 @@ public class Enemy : MonoBehaviour
         if (PlayerPrefs.GetInt("Level") != 1)
         {
             Debug.Log("currentlv: "+ PlayerPrefs.GetInt("Level"));
-            enemyStats.health += PlayerPrefs.GetInt("Level") * 2;
+            enemyStats.health += PlayerPrefs.GetInt("Level") * 5;
+            enemyStats.damage += PlayerPrefs.GetInt("Level") * 3;
             Debug.Log("Current health: "+enemyStats.health);
             enemyHealth_bar.maxValue = enemyStats.health;
         }
